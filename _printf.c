@@ -42,10 +42,10 @@ case 'd':
 num += fun_integer(arguments);
 break;
 default:
-_putchar('%'), _putchar(*p), num += 2;}
+_putchar('%'), _putchar(*p), num += 2; }
 }
 else
-_putchar(*p), num++;}
+_putchar(*p), num++; }
 va_end(arguments);
 return (num);
 }
