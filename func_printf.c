@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
-#include "holberton.h"
+#include "main.h"
 
 /**
  * fun_string - print string
