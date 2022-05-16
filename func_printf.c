@@ -1,10 +1,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "main.h"
-<<<<<<< HEAD
-
-=======
->>>>>>> 46ef396484504ec2ae487272c31a77fe80b8ec53
 /**
  * fun_string - print string
  * @arguments: va_list
