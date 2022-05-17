@@ -1,120 +1,106 @@
 #include "main.h"
-#include <unistd.h>
-#include <stdio.h>
+#include <stdlib.h>
 /**
- * print_char - writes the character c to stdout
- * @arg: argument
+ * print_c - prints a char
+ * @c: char to print
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: always 1
  */
-int print_char(va_list arg)
+int print_c(va_list c)
 {
-	return (_putchar(va_arg(arg, int)));
+char ch = (char)va_arg(c, int);
+_putchar(ch);
+return (1);
 }
-
 /**
- * print_int - prints an integer.
- * @arg: argument
- * Return: 0
+ * print_s - prints a string
+ * @s: string to print
+ *
+ * Return: number of chars printed
  */
-
-int print_int(va_list arg)
+int print_s(va_list s)
 {
-
-	unsigned int divisor = 1, i, resp, charPrinted = 0;
-	int n = va_arg(arg, int);
-
-	if (n < 0)
-	{
-		_putchar('-');
-		charPrinted++;
-		n *= -1;
-	}
-
-	for (i = 0; n / divisor > 9; i++, divisor *= 10)
-		;
-
-	for (; divisor >= 1; n %= divisor, divisor /= 10, charPrinted++)
-	{
-		resp = n / divisor;
-		_putchar('0' + resp);
-	}
-	return (charPrinted);
+int count;
+char *str = va_arg(s, char *);
+if (str == NULL)
+str = "(null)";
+for (count = 0; str[count]; count++)
+{
+_putchar(str[count]);
 }
-
-/**
- * print_STR - prints a string with a `S` (upper case) specificer
- * @arg: argument
- * Return: number of character printed
- */
-
-int print_STR(va_list arg)
-{
-	int i;
-	char *str = va_arg(arg, char*);
-
-	if (str == NULL)
-		str = "(null)";
-	else if (*str == '\0')
-		return (-1);
-
-	for (i = 0; str[i]; i++)
-	{
-		if ((str[i] < 32 && str[i] > 0) || str[i] >= 127)
-		{
-			_putchar('\\');
-			_putchar('x');
-			if (i < 16)
-				_putchar('0');
-
-			print_unsignedIntToHex(str[i], 'A');
-		}
-		else
-			_putchar(str[i]);
-	}
-	return (i);
+return (count);
 }
-
 /**
- * print_str - prints a string with a `s` (lower case) specifier
- * @arg: argument
- * Return: number of character printed
+ * print_i - prints an integer
+ * @i: integer to print
+ *
+ * Return: number of chars and digits printed
  */
-
-int print_str(va_list arg)
+int print_i(va_list i)
 {
-	int i;
-	char *str = va_arg(arg, char*);
-
-	if (str == NULL)
-		str = "(null)";
-	else if (*str == '\0')
-		return (-1);
-
-	for (i = 0; str[i]; i++)
-		_putchar(str[i]);
-
-	return (i);
+int a[10];
+int j, m, n, sum, count;
+n = va_arg(i, int);
+count = 0;
+m = 1000000000;
+a[0] = n / m;
+for (j = 1; j < 10; j++)
+{
+m /= 10;
+a[j] = (n / m) % 10;
 }
-
-/**
- * print_unsigned - prints an unsigned int.
- * @arg: argument
- * Return: 0
- */
-
-int print_unsigned(va_list arg)
+if (n < 0)
 {
-	int divisor = 1, i, resp;
-	unsigned int n = va_arg(arg, unsigned int);
-
-	for (i = 0; n / divisor > 9; i++, divisor *= 10)
-		;
-	for (; divisor >= 1; n %= divisor, divisor /= 10)
-	{
-		resp = n / divisor;
-		_putchar('0' + resp);
-	}
-	return (i + 1);
+_putchar('-');
+count++;
+for (j = 0; j < 10; j++)
+a[j] *= -1;
+}
+for (j = 0, sum = 0; j < 10; j++)
+{
+sum += a[j];
+if (sum != 0 || j == 9)
+{
+_putchar('0' + a[j]);
+count++;
+}
+}
+return (count);
+}
+/**
+ * print_d - prints a decimal
+ * @d: decimal to print
+ *
+ * Return: number of chars and digits printed
+ */
+int print_d(va_list d)
+{
+int a[10];
+int j, m, n, sum, count;
+n = va_arg(d, int);
+count = 0;
+m = 1000000000;
+a[0] = n / m;
+for (j = 1; j < 10; j++)
+{
+m /= 10;
+a[j] = (n / m) % 10;
+}
+if (n < 0)
+{
+_putchar('-');
+count++;
+for (j = 0; j < 10; j++)
+a[j] *= -1;
+}
+for (j = 0, sum = 0; j < 10; j++)
+{
+sum += a[j];
+if (sum != 0 || j == 9)
+{
+_putchar('0' + a[j]);
+count++;
+}
+}
+return (count);
 }
