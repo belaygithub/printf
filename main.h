@@ -2,8 +2,6 @@
 #define _MAIN_H_
 
 #include <stdarg.h>
-<<<<<<< HEAD
-=======
 
 int _putchar(char c);
 int print_int(va_list arg);
@@ -21,7 +19,6 @@ int print_hex(va_list arg);
 int print_HEX(va_list arg);
 int print_STR(va_list arg);
 
->>>>>>> 3591ceb79d5acc09d422574f5972602bab429834
 /**
  * struct print - structure for printing various types
  * @t: type to print
