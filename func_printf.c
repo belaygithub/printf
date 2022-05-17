@@ -1,6 +1,9 @@
 #include "main.h"
+<<<<<<< HEAD
 #include <unistd.h>
 #include <stdio.h>
+=======
+>>>>>>> abf6fd88811a8c09d52df4f08bbdf5be5518845c
 /**
  * print_char - writes the character c to stdout
  * @arg: argument
