@@ -2,6 +2,26 @@
 #define _MAIN_H_
 
 #include <stdarg.h>
+<<<<<<< HEAD
+=======
+
+int _putchar(char c);
+int print_int(va_list arg);
+int print_unsigned(va_list arg);
+int _printf(const char *format, ...);
+int print_char(va_list arg);
+int print_str(va_list arg);
+int print_percent(void);
+void print_binary(unsigned int n, unsigned int *printed);
+int print_unsignedToBinary(va_list arg);
+int print_oct(va_list arg);
+int print_unsignedIntToHex(unsigned int num, char _case);
+int print_hex_base(va_list arg, char _case);
+int print_hex(va_list arg);
+int print_HEX(va_list arg);
+int print_STR(va_list arg);
+
+>>>>>>> 3591ceb79d5acc09d422574f5972602bab429834
 /**
  * struct print - structure for printing various types
  * @t: type to print
