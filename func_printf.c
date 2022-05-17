@@ -1,70 +1,120 @@
-#include <stdio.h>
-#include <stdarg.h>
 #include "main.h"
-<<<<<<< HEAD
+#include <unistd.h>
+#include <stdio.h>
+/**
+ * print_char - writes the character c to stdout
+ * @arg: argument
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int print_char(va_list arg)
+{
+	return (_putchar(va_arg(arg, int)));
+}
 
-=======
->>>>>>> 46ef396484504ec2ae487272c31a77fe80b8ec53
 /**
- * fun_string - print string
- * @arguments: va_list
- * Return: string
+ * print_int - prints an integer.
+ * @arg: argument
+ * Return: 0
  */
-int fun_string(va_list arguments)
-{
-char *str;
-int i = 0;
-str = va_arg(arguments, char *);
-if (str == NULL)
-{
-str = "(null)";
-}
-for (; *str; str++)
-{
-putchar(*str);
-i++;
-}
-return (i);
-}
-/**
- * fun_character - print character
- * @arguments: va_list
- * Return: character
- */
-int fun_character(va_list arguments)
-{
-int x = 0;
-x = va_arg(arguments, int);
-_putchar(x);
-return (1);
-}
-/**
- * fun_integer - print integer and digit
- * @arguments: va_list
- * Return: int
- */
-int fun_integer(va_list arguments)
-{
-int i, d, length;
-unsigned int x;
 
-i = va_arg(arguments, int);
-d = 1;
-length = 0;
-if (i < 0)
+int print_int(va_list arg)
 {
-length = length + _putchar('-');
-x = i * -1;
+
+	unsigned int divisor = 1, i, resp, charPrinted = 0;
+	int n = va_arg(arg, int);
+
+	if (n < 0)
+	{
+		_putchar('-');
+		charPrinted++;
+		n *= -1;
+	}
+
+	for (i = 0; n / divisor > 9; i++, divisor *= 10)
+		;
+
+	for (; divisor >= 1; n %= divisor, divisor /= 10, charPrinted++)
+	{
+		resp = n / divisor;
+		_putchar('0' + resp);
+	}
+	return (charPrinted);
 }
-else
+
+/**
+ * print_STR - prints a string with a `S` (upper case) specificer
+ * @arg: argument
+ * Return: number of character printed
+ */
+
+int print_STR(va_list arg)
 {
-x = i;
+	int i;
+	char *str = va_arg(arg, char*);
+
+	if (str == NULL)
+		str = "(null)";
+	else if (*str == '\0')
+		return (-1);
+
+	for (i = 0; str[i]; i++)
+	{
+		if ((str[i] < 32 && str[i] > 0) || str[i] >= 127)
+		{
+			_putchar('\\');
+			_putchar('x');
+			if (i < 16)
+				_putchar('0');
+
+			print_unsignedIntToHex(str[i], 'A');
+		}
+		else
+			_putchar(str[i]);
+	}
+	return (i);
 }
-while (x / d > 9)
+
+/**
+ * print_str - prints a string with a `s` (lower case) specifier
+ * @arg: argument
+ * Return: number of character printed
+ */
+
+int print_str(va_list arg)
 {
-length = length + _putchar('0' + x / d);
-x = x % d;
-d = d / 10;
+	int i;
+	char *str = va_arg(arg, char*);
+
+	if (str == NULL)
+		str = "(null)";
+	else if (*str == '\0')
+		return (-1);
+
+	for (i = 0; str[i]; i++)
+		_putchar(str[i]);
+
+	return (i);
 }
-return (length);
+
+/**
+ * print_unsigned - prints an unsigned int.
+ * @arg: argument
+ * Return: 0
+ */
+
+int print_unsigned(va_list arg)
+{
+	int divisor = 1, i, resp;
+	unsigned int n = va_arg(arg, unsigned int);
+
+	for (i = 0; n / divisor > 9; i++, divisor *= 10)
+		;
+	for (; divisor >= 1; n %= divisor, divisor /= 10)
+	{
+		resp = n / divisor;
+		_putchar('0' + resp);
+	}
+	return (i + 1);
 }
