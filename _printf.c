@@ -1,51 +1,79 @@
-#include <stdlib.h>
-#include <stdarg.h>
 #include "main.h"
+#include <stdlib.h>
+#include <stdio.h>
 /**
- * _printf - print anything
- * @format: arguments
- * Return: number of characters printed
+ * printIdentifiers - prints special characters
+ * @next: character after the %
+ * @arg: argument for the indentifier
+ * Return: the number of characters printed
+ * (excluding the null byte used to end output to strings)
+ */
+int printIdentifiers(char next, va_list arg) 
+{
+int functsIndex;
+identifierStruct functs[] = {
+{"c", print_char},
+{"s", print_str},
+{"d", print_int},
+{"i", print_int},
+{"u", print_unsigned},
+{"S", print_STR},
+{NULL, NULL}
+};
+for (functsIndex = 0; functs[functsIndex].indentifier != NULL; functsIndex++)
+{
+if (functs[functsIndex].indentifier[0] == next)
+return (functs[functsIndex].printer(arg));
+}
+return (0); 
+}
+/**
+ * _printf - mimic printf from stdio
+ * Description: produces output according to a format
+ * write output to stdout, the standard output stream
+ * @format: character string composed of zero or more directive
+ *
+ * Return: the number of characters printed
+ * (excluding the null byte used to end output to strings)
+ * return -1 for incomplete identifier error
  */
 int _printf(const char *format, ...)
 {
-va_list arguments;
-const char *p;
-int num = 0;
+unsigned int i;
+int identifierPrinted = 0, charPrinted = 0;
+va_list arg;
 
+va_start(arg, format);
 if (format == NULL)
 return (-1);
-va_start(arguments, format);
-for (p = format; *p; p++)
+for (i = 0; format[i] != '\0'; i++)
 {
-if (*p == '%' && *p + 1 == '%')
+if (format[i] != '%')
 {
-_putchar(*p), num++;
+_putchar(format[i]);
+charPrinted++;
 continue;
 }
-else if (*p == '%' && *p + 1 != '%')
+if (format[i + 1] == '%')
 {
-switch (*++p)
-{
-case 's':
-num += fun_string(arguments);
-break;
-case 'c':
-num += fun_character(arguments);
-break;
-case '%':
-_putchar('%'), num++;
-break;
-case '\0':
-return (-1);
-case 'i':
-case 'd':
-num += fun_integer(arguments);
-break;
-default:
-_putchar('%'), _putchar(*p), num += 2; }
+_putchar('%');
+charPrinted++;
+i++;
+continue;
 }
-else
-_putchar(*p), num++; }
-va_end(arguments);
-return (num);
+if (format[i + 1] == '\0')
+return (-1);
+identifierPrinted = printIdentifiers(format[i + 1], arg);
+if (identifierPrinted == -1 || identifierPrinted != 0)
+i++;
+if (identifierPrinted > 0)
+charPrinted += identifierPrinted;
+if (identifierPrinted == 0)
+{
+_putchar('%');
+charPrinted++;
+}
+}
+va_end(arg);
+return (charPrinted);
 }
